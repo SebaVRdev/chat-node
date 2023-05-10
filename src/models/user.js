@@ -1,6 +1,5 @@
 //Modelo de la collect de User
 const { Schema, model } = require('mongoose');
-const { use } = require('../routes/user.routes');
 
 const UserSchema = Schema({
     name: {

@@ -4,13 +4,14 @@ const {Router} = require('express');
 //Validation
 const { check } = require('express-validator');
 //Mdl personalizado para validar los check
-const { validarCampos } = require('../middlewares/validate-campos.js')
+const { validarCampos, validarJWT } = require('../middlewares')
 
 //Controllers
-const { login, googleSignIn } = require('../controllers/auth.controller');
+const { login, googleSignIn, renovarToken } = require('../controllers/auth.controller');
 
 const router = Router();
 
+router.get('/',validarJWT, renovarToken);
 
 router.post('/login', [
     check('email', 'El correro es obligatorio').isEmail(),

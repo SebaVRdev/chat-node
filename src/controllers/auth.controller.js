@@ -33,9 +33,9 @@ const login = async (req, res) => {
 
         //GENERAR JWT
         const token = await generarJWT(userLogin.id); //Generamos el token y lo unico que guardaremos en el payload es el id
-           //Cada vez que nos autenticamos generamos un token distinto 
+        //Cada vez que nos autenticamos generamos un token distinto 
 
-           //Cada vez que el usuario logueado haga una peticion, se va a corroborar si nosotros firmamos ese token y si tiene la informacion que requerimos (id)
+        //Cada vez que el usuario logueado haga una peticion, se va a corroborar si nosotros firmamos ese token y si tiene la informacion que requerimos (id)
 
         res.json({message: 'LOGIN POST', userLogin, token})
     } catch (error) {
@@ -95,7 +95,21 @@ const googleSignIn = async (req, res) => {
     };
 };
 
+const renovarToken = async (req, res) => {
+    //Si estamos aca significa que ya paso por la validacion del JWT y ya tenemos el usuario validado
+    const { user } = req;
+
+    //GENERAR JWT
+    const token = await generarJWT(user.id); 
+    
+    res.json({
+        user,
+        token
+    })
+}
+
 module.exports = {
     login,
-    googleSignIn
+    googleSignIn,
+    renovarToken
 }

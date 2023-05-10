@@ -2,13 +2,9 @@
 const jwt = require('jsonwebtoken');
 
 //Traemos modelo para obtener usuario con el uid
-const User = require('../models/user.js');
-
+const User = require('../models/user');
 
 const validarJWT = async (req, res, next) => {
-    //http://localhost:8000/api/users/63aeb02457819e0d9ee2d8ac?apikey=token
-    //Aunque generalmente los token de acceso se mandan en loe headers como Authorization
-
     const token = req.header('x-token');
     if (!token) {
         return res.status(401).json({
@@ -21,7 +17,7 @@ const validarJWT = async (req, res, next) => {
         const { uid } = jwt.verify(token, process.env.SECRETORPRIVATEKEY);
 
         //Leemos usuario que corresponde al Id
-        const user = await User.findById(uid);
+        const user = await User.findOne({_id: uid});
         
         //Verificamos si encontramos usuario con ese id
         if (!user) {
