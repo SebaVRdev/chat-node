@@ -44,7 +44,7 @@ router.put("/:id",[
 router.delete("/:id", [
   validarJWT,
   //esAdminRole, //MDL fuerza a que el usuario tenga que ser administrador
-  tieneRol('ADMIN_ROLE', 'VENTAS_ROLE', 'PENE_ROLE'),
+  tieneRol('ADMIN_ROLE', 'VENTAS_ROLE', 'USER_ROLE'),
   check('id', 'No es un ID valido de Mongo').isMongoId(),
   //check('id').custom( validarJWT ),
   validarCampos
