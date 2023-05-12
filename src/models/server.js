@@ -21,9 +21,6 @@ class Server {
     this.paths = {
       users     : '/api/users',
       auth      : '/api/auth',
-      category  : '/api/category',
-      product   : '/api/product',
-      search    : '/api/search',
       fileUpload: '/api/upload',
     }
 
@@ -41,7 +38,7 @@ class Server {
   }
 
   sockets(){
-    this.io.on('connection', socketController);
+    this.io.on('connection', (socket) => socketController(socket, this.io));
   }
 
   //Conexion a la BD
@@ -74,9 +71,6 @@ class Server {
     //Cargamos las rutas
     this.app.use(this.paths.users, require('../routes/user.routes.js'));
     this.app.use(this.paths.auth, require('../routes/auth.routes.js'));
-    this.app.use(this.paths.category, require('../routes/category.routes.js'));
-    this.app.use(this.paths.product, require('../routes/product.routes.js'));
-    this.app.use(this.paths.search, require('../routes/search.routes.js'));
     this.app.use(this.paths.fileUpload, require('../routes/uploads.routes.js'));
   };
 
