@@ -4,7 +4,7 @@ const fs = require('fs');
 
 const { uploadFile } = require("../helpers");
 //Models
-const {User, Product} = require('../models/index.js')
+const {User} = require('../models/index.js')
 
 
 const uploadFiles = async (req, res) => {
@@ -44,14 +44,6 @@ const updateFile = async (req, res) => {
         return res.status(400).json({msg: `No existe user con id: ${id}`})
       }
     break;
-
-    case 'product':
-      model = await Product.findById(id);
-      //Validamos que exista el id, en la collecion que vamos a modificar
-      if (!model) {
-        return res.status(400).json({msg: `No existe product con id: ${id}`})
-      }
-    break;
   
     default:
       return res.status(500).json({msg: 'Aun no se implementa esto'})
@@ -87,14 +79,6 @@ const getImage = async(req, res) => {
       //Validamos que exista el id, en la collecion que vamos a mostrar
       if (!model) {
         return res.status(400).json({msg: `No user con id : ${id}`})
-      }
-    break;
-
-    case 'product':
-      model = await Product.findById(id);
-      //Validamos que exista el id, en la collecion que vamos a mostrar
-      if (!model) {
-        return res.status(400).json({msg: `No product con id : ${id}`})
       }
     break;
   

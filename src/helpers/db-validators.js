@@ -25,6 +25,7 @@ const existUsuarioPorId = async (id) => {
     }
 }
 
+
 const existNamePorId = async (id,datos) => {
     const name = {datos}.datos.req.body.name;
     const user = await User.findById(id);
@@ -32,12 +33,29 @@ const existNamePorId = async (id,datos) => {
         throw new Error(`El nombre ingresado es el mismo que tenia!`);
     }
 
-}
+};
+
+/* 
+    Cuando actualicemos una imagen, en el endpoint marcamos la coleccion en la que haremos modificaciones
+    por lo que haremos un helper para usarlos en el check().custom() y verificar si la collecion existe o esta permitida para ser modificada  
+    -collection: Coleccion que haremos la modificacion
+    -collections: Arreglo que contiene todos las posibles colecciones modificables ej. ['user','product','category','role']
+*/
+const permittedCollections = (collection = '', collections = []) => {
+    const include = collections.includes(collection);
+    if (!include) {
+        throw new Error(`La coleccion ${collection} no es permitida | Colecciones permitidas: ${collections}`)
+    }
+
+    //En caso de que todo salga bien mandamos un true
+    return true
+} 
 
 //Exportamos 
 module.exports = {
     isValidRole,
     existEmail,
     existUsuarioPorId,
-    existNamePorId
+    existNamePorId,
+    permittedCollections
 }
